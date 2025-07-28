@@ -237,14 +237,3 @@ Royal violet, muted gold, warm cream, rich black theme
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, hsl(var(--primary-glow)), hsl(var(--gold-accent)));
 }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}
