@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X, Sparkles, LogOut, User } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { name: 'Home', href: '#home' },
@@ -42,12 +45,27 @@ const Navigation = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="genie" size="sm">
-              Sign In
-            </Button>
-            <Button variant="magic" size="sm">
-              Start Free Trial
-            </Button>
+            {user ? (
+              <>
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <User className="w-4 h-4" />
+                  <span>{user.email}</span>
+                </div>
+                <Button variant="ghost" size="sm" onClick={signOut}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="genie" size="sm" asChild>
+                  <Link to="/auth">Sign In</Link>
+                </Button>
+                <Button variant="magic" size="sm" asChild>
+                  <Link to="/auth">Start Free Trial</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -77,12 +95,27 @@ const Navigation = () => {
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="genie" size="sm">
-                  Sign In
-                </Button>
-                <Button variant="magic" size="sm">
-                  Start Free Trial
-                </Button>
+                {user ? (
+                  <>
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground px-2">
+                      <User className="w-4 h-4" />
+                      <span>{user.email}</span>
+                    </div>
+                    <Button variant="ghost" size="sm" onClick={signOut}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="genie" size="sm" asChild>
+                      <Link to="/auth">Sign In</Link>
+                    </Button>
+                    <Button variant="magic" size="sm" asChild>
+                      <Link to="/auth">Start Free Trial</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
